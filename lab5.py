@@ -39,8 +39,10 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 history = model.fit(X_train, y_train, epochs=50, batch_size=16, validation_data=(X_test, y_test))
 
 # Оцениваем качество на тестовой выборке
-y_pred = (model.predict(X_test) > 0.5).astype("int32")
-print("Accuracy:", accuracy_score(y_test, y_pred))
+y_pred = model.predict(X_test)
+y_pred_classes = np.argmax(y_pred, axis=1)  # Преобразуем вероятности в классы
+y_test_classes = np.argmax(y_test, axis=1)
+print("Accuracy:", accuracy_score(y_test_classes, y_pred_classes))
 
 
 # График изменения функции ошибки
